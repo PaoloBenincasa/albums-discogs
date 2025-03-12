@@ -1,0 +1,41 @@
+@import 'bootstrap/dist/css/bootstrap.min.css';
+
+.bookCard{
+  background-color: rgb(210, 233, 233);
+  border-radius: 5px;
+  padding: 5px;
+  margin: 5px;
+  display: flex;
+  transition: all 0.3s ease-in-out;
+  text-decoration: none;
+}
+
+.bookCard:hover{
+  background-color: rgb(179, 235, 235);
+  
+}
+
+.albumCoverSmall{
+  width: 70px;
+  height: 70px;
+}
+
+.profileList{
+  list-style-type: none;
+}
+a{
+  text-decoration: none;
+}
+
+/* @media (prefers-color-scheme: light) {
+  :root {
+    color: #213547;
+    background-color: #ffffff;
+  }
+  a:hover {
+    color: #747bff;
+  }
+  button {
+    background-color: #f9f9f9;
+  }
+} */
