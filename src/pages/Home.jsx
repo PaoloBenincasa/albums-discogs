@@ -12,6 +12,7 @@ const Home = () => {
     return (
         <>
             <AlbumSearch onAlbumsFetched={handleAlbumsFetched} />
+            discogggggs
             <AlbumList albums={albums} />
         </>
     );
