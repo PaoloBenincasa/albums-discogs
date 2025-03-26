@@ -26,7 +26,7 @@ Protected routes ensuring users only access their own data 🛡️
 
 ⭐ Review Features
 
-Post, edit, and delete reviews on albums.
+Post and delete reviews on albums.
 
 Rating system for albums (based on user input) 🎶
 
