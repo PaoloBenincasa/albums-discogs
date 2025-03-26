@@ -88,6 +88,46 @@ export const addAlbumToWishlist = async (userId, album) => {
 };
 
 
+
+export const fetchAlbumsByArtistId = async (artistId) => {
+    try {
+        let allAlbums = [];
+        let offset = 0;
+        const limit = 200;
+        let hasMore = true;
+        let artistName = '';
+
+        while (hasMore) {
+            const lookupResponse = await fetch(
+                `https://itunes.apple.com/lookup?id=${artistId}&entity=album&limit=${limit}&offset=${offset}`
+            );
+            const lookupData = await lookupResponse.json();
+
+            if (lookupData.results?.length > 0) {
+                // Prende il nome dell'artista dal primo risultato
+                if (offset === 0) {
+                    artistName = lookupData.results[0].artistName;
+                }
+
+                // Filtra solo gli album (salta il primo elemento che è l'artista)
+                const albums = lookupData.results.slice(1);
+                allAlbums = [...allAlbums, ...albums];
+
+                // Controlla se ci sono altri risultati
+                hasMore = albums.length === limit;
+                offset += limit;
+            } else {
+                hasMore = false;
+            }
+        }
+
+        return { artistName, albums: allAlbums };
+    } catch (error) {
+        console.error('Errore durante il recupero degli album:', error);
+        return { artistName: '', albums: [] };
+    }
+};
+
 export const getAlbumReviews = async (albumId) => {
     try {
         const { data, error } = await supabase
