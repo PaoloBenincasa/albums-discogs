@@ -79,7 +79,7 @@ const Profile = () => {
                     return;
                 }
                 setProfileUser(userData);
-                // Recupera gli album già ascoltati
+                // recupero already listened
                 const { data: listenedData, error: listenedError } = await supabase
                     .from('already_listened')
                     .select('album_id, title, artist, artist_id, artwork_url, release_year, primary_genre_name, rating')
@@ -91,7 +91,7 @@ const Profile = () => {
                     setAlreadyListenedAlbums(listenedData);
                 }
 
-                // Recupera gli album nella wishlist
+                // recupero la wishlist
                 const { data: wishlistData, error: wishlistError } = await supabase
                     .from('wishlist')
                     .select('album_id, title, artist, artist_id, artwork_url, release_year, primary_genre_name')

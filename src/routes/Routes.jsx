@@ -6,8 +6,7 @@ import Home from '../pages/Home';
 import Layout from '../components/Layout';
 import Profile from '../pages/Profile';
 import AlbumSearch from '../components/AlbumSearch';
-// import Callback from '../pages/Callback';
-import AlbumDetail from '../pages/AlbumDetail'; // Importa AlbumDetail
+import AlbumDetail from '../pages/AlbumDetail'; 
 import { useAuth } from '../hooks/useAuth';
 import ArtistDetail from '../pages/ArtistDetail';
 import Account from '../pages/Account';
@@ -49,10 +48,6 @@ const router = createBrowserRouter([
                 path: '/search',
                 element: <AlbumSearch />,
             },
-            // {
-            //     path: '/callback',
-            //     element: <Callback />,
-            // },
             {
                 path: '/artist/:artistId',
                 element: <ArtistDetail />,

@@ -22,7 +22,7 @@ const AlbumDetail = () => {
     const [refreshReviews, setRefreshReviews] = useState(false);
     const navigate = useNavigate();
 
-    // Primo useEffect: carica i dettagli dell’album
+    // carico i dettagli degli album
     useEffect(() => {
         const getAlbumDetails = async () => {
             try {
@@ -42,7 +42,7 @@ const AlbumDetail = () => {
         getAlbumDetails();
     }, [collectionId]);
 
-    // Secondo useEffect: controlla le liste solo quando album e user sono disponibili
+    // controllo le liste solo quando user e album sono disponibili
     useEffect(() => {
         const checkAlbumLists = async () => {
             if (!user || !album) return;
@@ -200,7 +200,7 @@ const AlbumDetail = () => {
             }]);
             if (!error) {
                 setNewReview('');
-                setRefreshReviews(true); // Attiva il ricaricamento
+                setRefreshReviews(true); 
                 handleCloseModal();
             } else {
                 console.error('Errore durante l\'aggiunta della recensione:', error);
@@ -389,10 +389,7 @@ const AlbumDetail = () => {
                 </div>
 
             </div>
-            {/* <div className='text-center pb-2 blackToOrange' onClick={() => navigate('/profile')}>
-                <i class="bi bi-backspace-fill me-1 "></i>
-                back to my profile
-            </div> */}
+          
         </>
     );
 };

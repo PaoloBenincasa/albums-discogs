@@ -10,7 +10,7 @@ const Home = () => {
             <div>
                 <header className='container-fluid d-flex flex-column align-items-center'>
                     <div className='hero'>
-                        <h1>myAlbums</h1>
+                        <h1>Music Rater</h1>
                         <h4 className='p-3'>
                             rate your favorite records <br />
 

@@ -15,12 +15,12 @@ const Navbar = () => {
       const fetchUsername = async () => {
         const { data, error } = await supabase
           .from('users')
-          .select('username') // Modifica qui: recupera 'username'
+          .select('username')
           .eq('id', user.id)
           .single();
 
         if (data) {
-          setUsername(data.username || ''); // Modifica qui: usa data.username
+          setUsername(data.username || ''); 
         } else if (error) {
           console.error('Errore nel recupero dello username:', error);
         }
@@ -53,7 +53,7 @@ const Navbar = () => {
           <div className='d-flex orange'>
             <i className="bi bi-boombox-fill pe-1 "></i>
             <div >
-              myAlbums
+              Music Rater
             </div>
           </div>
         </Link>
@@ -66,7 +66,7 @@ const Navbar = () => {
               aria-haspopup="true"
               aria-expanded="false"
             >
-              {user ? username : 'account'} {/* Modifica qui: usa la variabile 'username' */}
+              {user ? username : 'account'}
             </button>
             <div className="dropdown-menu " aria-labelledby="accountDropdown">
               {user ? (

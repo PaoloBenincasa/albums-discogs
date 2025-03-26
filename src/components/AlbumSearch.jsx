@@ -23,38 +23,28 @@ const AlbumSearch = () => {
         }
     };
 
-    // Gestione input con debounce
+    
     const handleInputChange = (e) => {
         const value = e.target.value;
         setSearchTerm(value);
 
-        // Cancella il timeout esistente
+        
         if (debounceTimeout.current) {
             clearTimeout(debounceTimeout.current);
         }
 
-        // Avvia nuovo timeout solo se c'è un valore
+       
         if (value.trim()) {
             debounceTimeout.current = setTimeout(() => {
                 handleSearch(value);
-            }, 500); // 500ms di delay
+            }, 500); 
         } else {
             setResultsVisible(false);
             setAlbums([]);
         }
     };
 
-    // const handleManualSearch = () => {
-    //     // Cancella il debounce esistente
-    //     if (debounceTimeout.current) {
-    //         clearTimeout(debounceTimeout.current);
-    //     }
-    //     if (searchTerm.trim()) {
-    //         handleSearch(searchTerm);
-    //     }
-    // };
-
-    // Cleanup del timeout allo smontaggio
+   
     useEffect(() => {
         return () => {
             if (debounceTimeout.current) {
@@ -70,8 +60,8 @@ const AlbumSearch = () => {
     };
 
     const handleResultClick = () => {
-        setResultsVisible(false); // Nascondi i risultati
-        setSearchTerm(''); // Resetta la ricerca
+        setResultsVisible(false); 
+        setSearchTerm(''); 
     };
 
     useEffect(() => {

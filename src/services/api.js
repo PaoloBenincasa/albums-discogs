@@ -37,7 +37,7 @@ export const fetchAlbumDetails = async (collectionId) => {
     }
 };
 
-// Funzione per l'aggiunta di un album alla lista "già ascoltati"
+// aggiungo album a already listened
 export const addAlbumToAlreadyListened = async (userId, album, rating) => {
     try {
         
@@ -46,7 +46,7 @@ export const addAlbumToAlreadyListened = async (userId, album, rating) => {
             .from('already_listened')
             .insert([{
                 user_id: userId,
-                album_id: album.collectionId, // Utilizza collectionId come ID univoco
+                album_id: album.collectionId, 
                 title: album.collectionName,
                 artist: album.artistName,
                 artist_id: album.artistId,
@@ -65,14 +65,14 @@ export const addAlbumToAlreadyListened = async (userId, album, rating) => {
     }
 };
 
-// Funzione per l'aggiunta di un album alla lista "da ascoltare"
+// aggiungo alla wishlist
 export const addAlbumToWishlist = async (userId, album) => {
     try {
         const { error } = await supabase
             .from('wishlist')
             .insert([{
                 user_id: userId,
-                album_id: album.collectionId, // Utilizza collectionId come ID univoco
+                album_id: album.collectionId, 
                 title: album.collectionName,
                 artist: album.artistName,
                 artist_id: album.artistId,
@@ -87,46 +87,6 @@ export const addAlbumToWishlist = async (userId, album) => {
     }
 };
 
-
-// api.js
-export const fetchAlbumsByArtistId = async (artistId) => {
-    try {
-        let allAlbums = [];
-        let offset = 0;
-        const limit = 200;
-        let hasMore = true;
-        let artistName = '';
-
-        while (hasMore) {
-            const lookupResponse = await fetch(
-                `https://itunes.apple.com/lookup?id=${artistId}&entity=album&limit=${limit}&offset=${offset}`
-            );
-            const lookupData = await lookupResponse.json();
-
-            if (lookupData.results?.length > 0) {
-                // Prende il nome dell'artista dal primo risultato
-                if (offset === 0) {
-                    artistName = lookupData.results[0].artistName;
-                }
-
-                // Filtra solo gli album (salta il primo elemento che è l'artista)
-                const albums = lookupData.results.slice(1);
-                allAlbums = [...allAlbums, ...albums];
-
-                // Controlla se ci sono altri risultati
-                hasMore = albums.length === limit;
-                offset += limit;
-            } else {
-                hasMore = false;
-            }
-        }
-
-        return { artistName, albums: allAlbums };
-    } catch (error) {
-        console.error('Errore durante il recupero degli album:', error);
-        return { artistName: '', albums: [] };
-    }
-};
 
 export const getAlbumReviews = async (albumId) => {
     try {
