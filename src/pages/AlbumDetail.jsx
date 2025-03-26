@@ -6,6 +6,7 @@ import { toast } from 'react-toastify';
 
 const AlbumDetail = () => {
     const { collectionId } = useParams();
+    console.log("AlbumDetail - collectionId:", collectionId);
     const [album, setAlbum] = useState(null);
     const [loading, setLoading] = useState(true);
     const [showRatingInput, setShowRatingInput] = useState(false);

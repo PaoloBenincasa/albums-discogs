@@ -7,7 +7,7 @@ export const supabase = createClient(supabaseUrl, supabaseAnonKey);
 
 export const searchAlbums = async (searchTerm) => {
     try {
-        const response = await fetch(`https://itunes.apple.com/search?term=${searchTerm}&entity=album`);
+        const response = await fetch(`https://itunes.apple.com/search?term=${searchTerm}&entity=album&media=music&country=US`);
         const data = await response.json();
         console.log("data searchAlbums", data);
         if (data.results) {
@@ -23,7 +23,8 @@ export const searchAlbums = async (searchTerm) => {
 
 export const fetchAlbumDetails = async (collectionId) => {
     try {
-        const response = await fetch(`https://itunes.apple.com/lookup?id=${collectionId}&entity=album`);
+        const response = await fetch(`https://itunes.apple.com/lookup?id=${collectionId}&entity=album&media=music&country=US`);
+        console.log("Headers della risposta:", [...response.headers.entries()]);
         const data = await response.json();
         console.log("data fetchAlbumDetails", data);
         if (data.results) {
