@@ -183,7 +183,7 @@ const AlbumDetail = () => {
             setRefreshReviews(false);
         };
         fetchReviews();
-    }, [album, refreshReviews]); 
+    }, [album, refreshReviews]);
 
 
     useEffect(() => {
@@ -200,7 +200,7 @@ const AlbumDetail = () => {
             }]);
             if (!error) {
                 setNewReview('');
-                setRefreshReviews(true); 
+                setRefreshReviews(true);
                 handleCloseModal();
             } else {
                 console.error('Errore durante l\'aggiunta della recensione:', error);
@@ -260,7 +260,11 @@ const AlbumDetail = () => {
     };
 
     if (loading) {
-        return <div>Caricamento...</div>;
+        return <div class="d-flex justify-content-center mt-1">
+            <div className="spinner-border text-warning" role="status">
+                <span className="visually-hidden ">Loading...</span>
+            </div>
+        </div>;
     }
 
     if (!album) {
@@ -389,7 +393,7 @@ const AlbumDetail = () => {
                 </div>
 
             </div>
-          
+
         </>
     );
 };

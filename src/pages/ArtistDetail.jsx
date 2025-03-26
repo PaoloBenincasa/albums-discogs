@@ -29,9 +29,15 @@ const ArtistDetail = () => {
     }, [artistId]);
 
     if (loading) {
-        return <div className="container mt-4">Caricamento...</div>;
+        return <div class="d-flex justify-content-center mt-1">
+        <div className="spinner-border text-warning" role="status">
+            <span className="visually-hidden ">Loading...</span>
+        </div>
+    </div>;
     }
 
+
+   
     if (!artistName) {
         return <div className="container mt-4">Artista non trovato</div>;
     }

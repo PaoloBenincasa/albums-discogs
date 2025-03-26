@@ -113,7 +113,11 @@ const Profile = () => {
     }, [userId, user]);
 
     if (loading) {
-        return <div>Caricamento...</div>;
+        return <div class="d-flex justify-content-center mt-1">
+        <div className="spinner-border text-warning" role="status">
+            <span className="visually-hidden ">Loading...</span>
+        </div>
+    </div>;
     }
 
     console.log();
