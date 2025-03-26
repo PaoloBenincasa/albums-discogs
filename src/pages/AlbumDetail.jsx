@@ -380,7 +380,7 @@ const AlbumDetail = () => {
                                     <div className='dirtText small'>{new Date(review.created_at).toISOString().split('T')[0]} {new Date(review.created_at).toISOString().split('T')[1].split('.')[0]} </div>
                                     <div>{review.review_text}</div>
                                     {user && user.id === review.user_id && (
-                                        <div className='btnDelete text-end' onClick={() => handleDeleteReview(review.id)}>delete review</div>
+                                        <div className='btnDelete text-end' onClick={() => handleDeleteReview(review.id)}>delete</div>
                                     )}
                                 </div>
                             ))}
