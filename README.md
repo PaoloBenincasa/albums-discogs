@@ -1,6 +1,6 @@
 Music Rater
 
-A modern music discovery platform built with React and Supabase, allowing users to explore, track, and discuss their favorite albums, artists, and reviews.
+A modern music discovery platform built with React and Supabase, using the iTunes API, allowing users to explore, track, and discuss their favorite albums, artists, and reviews.
 
 ✨ Features
 
@@ -55,3 +55,10 @@ Bootstrap (for responsive layout)
 Backend:
 
 Supabase (Database & Authentication)
+
+Deploy:
+https://music-rater-roan.vercel.app/
+
+test user credentials:
+paolobenincasa1984@libero.it
+testprova477
