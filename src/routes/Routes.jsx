@@ -6,9 +6,13 @@ import Home from '../pages/Home';
 import Layout from '../components/Layout';
 import Profile from '../pages/Profile';
 import AlbumSearch from '../components/AlbumSearch';
-import Callback from '../pages/Callback';
+// import Callback from '../pages/Callback';
 import AlbumDetail from '../pages/AlbumDetail'; // Importa AlbumDetail
 import { useAuth } from '../hooks/useAuth';
+import ArtistDetail from '../pages/ArtistDetail';
+import Account from '../pages/Account';
+import UserReviews from '../pages/UserReviews';
+
 
 function ProtectedRoutes() {
     const { user, loading } = useAuth();
@@ -45,23 +49,41 @@ const router = createBrowserRouter([
                 path: '/search',
                 element: <AlbumSearch />,
             },
+            // {
+            //     path: '/callback',
+            //     element: <Callback />,
+            // },
             {
-                path: '/callback',
-                element: <Callback />,
+                path: '/artist/:artistId',
+                element: <ArtistDetail />,
             },
             {
-                path: '/album/:id', // Aggiungi la rotta per AlbumDetail
+                path: '/album/:collectionId', 
                 element: <AlbumDetail />,
             },
             {
+                path: '/profile', 
+                element: <Profile />,
+            },
+            {
+                path: '/user/:userId/profile',
+                element: <Profile />,
+            },
+            {
+                path: '/user/:userId/reviews',
+                element: <UserReviews />,
+            },
+            {
+                path: '/account',
                 element: <ProtectedRoutes />,
                 children: [
                     {
-                        path: '/profile',
-                        element: <Profile />,
+                        path: '', 
+                        element: <Account />,
                     },
                 ],
             },
+        
         ],
     },
 ]);

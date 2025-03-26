@@ -1,31 +1,465 @@
 @import 'bootstrap/dist/css/bootstrap.min.css';
+@import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css");
+@import url('https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Lexend+Exa:wght@100..900&display=swap');
 
-.bookCard{
-  background-color: rgb(210, 233, 233);
-  border-radius: 5px;
-  padding: 5px;
-  margin: 5px;
-  display: flex;
-  transition: all 0.3s ease-in-out;
-  text-decoration: none;
+* {
+  text-decoration: none !important;
+  font-family: 'Barlow', sans-serif;
+  font-weight: 500;
 }
 
-.bookCard:hover{
-  background-color: rgb(179, 235, 235);
+body {
+  background-color: var(--white);
+}
+
+:root {
+  --white: #fcfcfc;
+  --dirt: #dfdedb;
+  --black: #333333;
+  /* --orange: #eb6345; */
+  --orange: #e76d56;
+  --lightorange: #fb8000;
+}
+
+.loginForm {
+  border: 1px solid var(--dirt);
+  box-shadow: var(--dirt) 1px 1px 0px 0px;
+  width: 50%;
+  height: 75%;
+}
+
+.dirtText {
+  font-weight: 300;
+}
+
+.orange {
+  color: var(--orange);
+}
+
+.orange:hover {
+  color: var(--lightorange);
+  transition: all 0.3s ease-in-out;
+}
+
+.bgOrange {
+  background-color: var(--orange);
+  color: var(--white);
+}
+
+
+
+header {
+  background-image: url("./assets/orangevynil.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  height: calc(100vh - 112px);
+}
+
+.heightMin {
+  height: calc(100vh - 112px);
+}
+
+.navbar {
+  height: 54px;
+  padding: 0px;
+  margin: 0px;
+  /* border-bottom: solid 1px var(--orange); */
+  box-shadow: 1px 2px 1px var(--dirt);
+  z-index: 99;
+}
+
+/* .navbar-brand{
+  color: var(--white) !important;
+} 
+
+.nav-link{
+  color: var(--white) !important;
+} */
+
+.btnOrange {
+  background-color: var(--white);
+  color: var(--orange);
+  border: 2px solid var(--orange);
+  transition: all 0.2s ease-in-out;
+}
+
+.btnOrange:hover {
+  background-color: var(--orange);
+  color: var(--white);
+  border: 2px solid var(--orange);
+}
+
+.btnListened {
+  background-color: var(--orange);
+  color: var(--white);
+  border: none;
+  border-radius: 5px;
+  padding: 5px 10px;
+  width: 130px;
+  transition: all 0.3s ease-in-out;
+
+}
+
+.btnListened:hover {
+  background-color: var(--dirt);
+  color: var(--orange);
+}
+
+.btnWishlist {
+  background-color: var(--white);
+  color: var(--orange);
+  border: solid 1px var(--orange);
+  border-radius: 5px;
+  padding: 5px 10px;
+  width: 130px;
+  transition: all 0.3s ease-in-out;
+}
+
+.btnWishlist:hover {
+  background-color: var(--dirt);
+  color: var(--orange);
+  border: solid 1px var(--dirt);
+}
+
+.slider {
+  width: 130px;
+}
+
+.listened {
+  color: var(--orange);
+  text-decoration: underline var(--orange) !important;
+}
+
+.wishlisted {
+
+  color: var(--orange);
+  text-decoration: underline var(--orange) !important;
+
+}
+
+.albumCoverSmall {
+  width: 100px;
+  height: 100px;
+}
+
+.btnDelete {
+  color: darkred;
+  transition: all 0.2s ease-in-out;
+  cursor: pointer;
+}
+
+.btnDelete:hover {
+  color: rgba(255, 0, 0, 0.767);
+}
+
+.searchLi {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  height: 125px;
+  /* width: 500px; */
+  background-color: var(--white);
+  color: var(--black);
+  transition: all 0.2s ease-in-out;
+  overflow: hidden;
+}
+
+.searchLi:hover {
+  background-color: var(--orange);
+  color: var(--white);
+}
+
+.searchLi>div {
+  flex: 1 1 auto;
+  /* Gli elementi si espandono e si contraggono */
+  min-width: 0;
+  /* Impedisce agli elementi di fuoriuscire */
+}
+
+.searchLi>div:last-child {
+  flex: 0 0 auto;
+  /* L'ultimo elemento non si espande */
+  text-align: right;
+}
+
+/* .noStyleLink {
+  color: var(--black);
+} */
+
+.listLi {
+  background-color: var(--dirt);
+  color: var(--black);
+  transition: background-color 0.3s ease-in-out, transform 0.5s ease-in-out;
+  padding: 1%;
+  transform: scale(1);
+  
   
 }
 
-.albumCoverSmall{
-  width: 70px;
-  height: 70px;
+.bgDirt{
+  background-color: var(--dirt);
 }
 
-.profileList{
+
+.listLi:hover {
+  background-color: var(--orange);
+  color: var(--dirt) !important;
+  transform: scale(1.02);
+
+}
+
+.blackToOrange {
+  color: var(--black);
+  transition: all 0.2s ease-in-out;
+}
+
+.blackToOrange:hover {
+  color: var(--orange);
+}
+
+.artistLink {
+  color: var(--black);
+  transition: all 0.2s ease-in-out;
+}
+
+.artistLink:hover {
+  color: var(--white);
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  /* Sfondo semi-trasparente */
+  backdrop-filter: blur(2px);
+  /* Effetto di offuscamento */
+  z-index: 999;
+  /* Meno di autocomplete-container */
+}
+
+.dropdown-menu.show {
+  position: absolute !important;
+}
+
+.album-search-container {
+  height: 58px;
+}
+
+/* .profileList {
   list-style-type: none;
+  position: absolute;
+  top: 100%;
+  height: 100vh;
+  z-index: 1000;
+  background-color: white;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+
+} */
+
+.profileList {
+  overflow-y: auto;
+  padding-bottom: 20px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  border: 1px solid #ddd;
+  z-index: 1000;
+  background-color: var(--white);
+  text-decoration: none !important;
+  max-height: 82vh;
+  width: 50% !important;
 }
-a{
-  text-decoration: none;
+
+.albumCoverLarge {
+  width: 500px;
+  height: 500px;
+  max-width: 100%;
+  height: auto;
 }
+
+.profileCoverContainer {
+  
+  padding: 0% 0% 0% 0% !important;
+}
+
+.profileHeading {
+  margin-bottom: 0.5rem;
+  padding-left: 3.125rem;
+  border-bottom: 1px solid #dee2e6;
+}
+
+.search-input {
+  width: 25% !important;
+}
+
+.hero {
+  text-align: center;
+  padding: 0.2rem;
+  color: var(--black);
+  background-color: var(--white);
+  /* border: var(--dirt) solid 1px; */
+  position: absolute;
+  top: 25%;
+  box-shadow: 5px 5px 0 var(--orange);
+}
+
+.modal {
+  position: fixed;
+  /* Posizione fissa per coprire l'intera finestra */
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  /* Sfondo semi-trasparente */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  /* Assicura che il modale sia sopra gli altri elementi */
+}
+
+.modal-content {
+  background-color: violet;
+  padding: 20px;
+  border-radius: 5px;
+  width: 80%;
+  /* Larghezza del modale */
+  max-width: 600px;
+  /* Larghezza massima */
+  position: relative;
+  /* Necessario per il posizionamento assoluto del pulsante di chiusura */
+}
+
+.modal-content .close {
+  position: absolute;
+  /* Posiziona il pulsante di chiusura in alto a destra */
+  top: 10px;
+  right: 10px;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+/* Stili aggiuntivi per il contenuto del modale (textarea, pulsante) */
+.modal-content textarea {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+}
+
+.review {
+  width: 75%;
+  /* background-color: var(--dirt); */
+}
+
+.artistAlbumCard {
+  background-color: var(--white);
+  border: 1px solid var(--dirt);
+  color: var(--black);
+  transition: all 0.2s ease-in-out;
+}
+
+.artistAlbumCard:hover {
+  color: var(--orange);
+  border: 1px solid var(--black);
+  transform: scale(1.005);
+}
+
+/* .profileTitle, .profileArtist {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis; 
+} */
+
+@media screen and (max-width: 1000px){
+  .profileList{
+    width: 75% !important;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .albumCoverLarge {
+    margin-top: 13px;
+  }
+
+  .profileList{
+    width: 100% !important;
+  }
+
+  .review {
+    width: 90%;
+
+  }
+
+  .loginForm {
+    border: 1px solid var(--dirt);
+    box-shadow: var(--dirt) 1px 1px 0px 0px;
+    width: 90%;
+    height: 90%;
+  }
+
+  .hero {
+    top: 27%;
+  }
+
+  .prova {
+    background-color: var(--black) !important;
+  }
+
+  .searchResp {
+    display: none !important;
+  }
+
+  .listLi {
+    display: flex !important;
+    flex-direction: column !important;
+    padding-top: 10%;
+    padding-bottom: 5%;
+  }
+
+  .profileCoverContainer {
+    display: flex;
+    justify-content: center;
+    /* padding-left: 0%; */
+    padding: 2% 0% 2% 0% !important;
+  }
+
+  .profileHeading {
+    font-size: x-large;
+    margin-bottom: 0.5rem;
+    padding-left: 0% !important;
+    text-align: center;
+    border-bottom: 1px solid #dee2e6;
+  }
+
+  .profileTitle {
+    text-align: center !important;
+    
+  }
+
+  .profileArtist {
+    text-align: center !important;
+  }
+
+  .profileCover {
+    height: 165px;
+    width: 165px;
+  }
+
+  .dropdown-menu.show {
+    position: absolute !important;
+    left: -90px !important;
+  }
+
+  .search-input {
+    width: 50% !important;
+  }
+}
+
 
 /* @media (prefers-color-scheme: light) {
   :root {

@@ -1,19 +1,36 @@
 import React, { useState } from 'react';
-import AlbumSearch from '../components/AlbumSearch';
-import AlbumList from '../components/AlbumList';
+import { Link } from 'react-router';
+import { useAuth } from '../hooks/useAuth';
 
 const Home = () => {
-    const [albums, setAlbums] = useState([]);
-
-    const handleAlbumsFetched = (albums) => {
-        setAlbums(albums);
-    };
+    const { user } = useAuth();
 
     return (
         <>
-            <AlbumSearch onAlbumsFetched={handleAlbumsFetched} />
-            discogggggs
-            <AlbumList albums={albums} />
+            <div>
+                <header className='container-fluid d-flex flex-column align-items-center'>
+                    <div className='hero'>
+                        <h1>myAlbums</h1>
+                        <h4 className='p-3'>
+                            rate your favorite records <br />
+
+                            write a review <br />
+
+                            enjoy the music
+                        </h4>
+                        {user ? ( 
+                            <Link to={`/profile`} className="orange">
+                                my albums
+                            </Link>
+                        ) : (
+                            <Link to="/signup" className="orange">
+                                start now!
+                            </Link>
+                        )}
+                    </div>
+                </header>
+            </div>
+
         </>
     );
 };

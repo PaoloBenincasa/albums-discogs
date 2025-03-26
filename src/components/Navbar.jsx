@@ -8,17 +8,19 @@ const Navbar = () => {
   const { user, loading } = useAuth();
   const [username, setUsername] = useState('');
 
+
+
   useEffect(() => {
     if (user) {
       const fetchUsername = async () => {
         const { data, error } = await supabase
           .from('users')
-          .select('display_name')
+          .select('username') // Modifica qui: recupera 'username'
           .eq('id', user.id)
           .single();
 
         if (data) {
-          setUsername(data.display_name || '');
+          setUsername(data.username || ''); // Modifica qui: usa data.username
         } else if (error) {
           console.error('Errore nel recupero dello username:', error);
         }
@@ -45,9 +47,16 @@ const Navbar = () => {
   }
 
   return (
-    <nav className="navbar navbar-expand-lg navbar-light bg-light">
-      <Link className="navbar-brand" to="/">myAlbums</Link>
-      <div className="collapse navbar-collapse">
+    <nav className="navbar navbar-expand-lg navbar-light container-fluid">
+      <div className="collapse navbar-collapse d-flex justify-content-around align-items-center">
+        <Link className="navbar-brand" to="/">
+          <div className='d-flex orange'>
+            <i className="bi bi-boombox-fill pe-1 "></i>
+            <div >
+              myAlbums
+            </div>
+          </div>
+        </Link>
         <ul className="navbar-nav ml-auto">
           <li className="nav-item dropdown">
             <button
@@ -57,18 +66,20 @@ const Navbar = () => {
               aria-haspopup="true"
               aria-expanded="false"
             >
-              {user ? user.user_metadata.display_name : 'Account'}
+              {user ? username : 'account'} {/* Modifica qui: usa la variabile 'username' */}
             </button>
-            <div className="dropdown-menu dropdown-menu-right" aria-labelledby="accountDropdown">
+            <div className="dropdown-menu " aria-labelledby="accountDropdown">
               {user ? (
                 <>
-                  <Link className="dropdown-item" to="/profile">Profilo</Link>
-                  <button className="dropdown-item" onClick={handleLogout}>Logout</button>
+                  <Link className="dropdown-item" to="/profile">my albums</Link>
+                  <Link className="dropdown-item" to={`/user/${user.id}/reviews`}>my reviews</Link>
+                  <Link className="dropdown-item" to="/account">edit profile</Link>
+                  <button className="dropdown-item" onClick={handleLogout}>logout</button>
                 </>
               ) : (
                 <>
-                  <Link className="dropdown-item" to="/login">Login</Link>
-                  <Link className="dropdown-item" to="/signup">Signup</Link>
+                  <Link className="dropdown-item" to="/login">login</Link>
+                  <Link className="dropdown-item" to="/signup">signup</Link>
                 </>
               )}
             </div>
