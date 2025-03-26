@@ -1,12 +1,57 @@
-# React + Vite
+Music Rater
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A modern music discovery platform built with React and Supabase, allowing users to explore, track, and discuss their favorite albums, artists, and reviews.
 
-Currently, two official plugins are available:
+✨ Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+🎵 Music Discovery
 
-## Expanding the ESLint configuration
+Browse album and artist details, including artwork, artist names, and titles.
 
-If you are developing a production application, we recommend using TypeScript and enable type-aware lint rules. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+Read reviews and user-generated content on albums and artists.
+
+Explore user profiles and their written reviews.
+
+👤 User Features
+
+Sign in using email and password 🔐
+
+Personalized user profiles showcasing reviews and activity.
+
+Ability to edit and delete own reviews.
+
+View user reviews on albums.
+
+Protected routes ensuring users only access their own data 🛡️
+
+⭐ Review Features
+
+Post and delete reviews on albums.
+
+Rating system for albums (based on user input) 🎶
+
+See the date and time of review submissions ⏰
+
+🎨 UI/UX Features
+
+Responsive design for all devices 📱
+
+Elegant transitions and smooth loading states ✨
+
+Clean and intuitive interface 🎯
+
+🚀 Tech Stack Frontend:
+
+React
+
+React Router
+
+Custom hooks (useAuth, etc.)
+
+Bootstrap (for responsive layout)
+
+
+
+Backend:
+
+Supabase (Database & Authentication)
