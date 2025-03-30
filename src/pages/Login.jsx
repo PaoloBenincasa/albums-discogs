@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { supabase } from '../services/api';
-import { useNavigate } from 'react-router';
+import { useNavigate, Link } from 'react-router';
 import { toast } from 'react-toastify';
 
 const Login = () => {
@@ -43,7 +43,9 @@ const Login = () => {
         <input className='inputW' type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} />
         <button className='w-25 mt-4 btnOrange mx-auto' onClick={handleLogin}>Login</button>
 
-        <p className='text-center'>don't have an account yet? <a href="/signup" className='orange'>signup</a></p>
+        <p className='text-center'>don't have an account yet?                   
+          <Link className="orange ms-1" to="/signup">signup</Link>
+        </p>
       </div>
     </div>
   );

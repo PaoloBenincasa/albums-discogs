@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { supabase } from '../services/api';
-import { useNavigate } from 'react-router';
+import { useNavigate, Link } from 'react-router';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 const Signup = () => {
@@ -49,7 +49,7 @@ const Signup = () => {
 
                 <button className='w-25 mt-4 btnOrange mx-auto' onClick={handleSignup}>Signup</button>
 
-                <p className='text-center'>already have an account? <a href="/login" className='orange'>login</a></p>
+                <p className='text-center'>already have an account? <Link className="orange" to="/login">login</Link></p>
 
         
 
