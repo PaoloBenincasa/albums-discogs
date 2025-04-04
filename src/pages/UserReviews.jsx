@@ -20,13 +20,13 @@ const UserReviews = () => {
                 if (error) {
                     console.error('Errore nel recupero delle recensioni:', error);
                     toast.error('Failed to fetch reviews. Please try again later.');
-                    setReviews([]); 
+                    setReviews([]);
                 } else {
                     setReviews(data || []);
                 }
             } catch (error) {
                 console.error('Errore durante il recupero delle recensioni:', error);
-                toast.error('An unexpected error occurred. Please try again later.'); 
+                toast.error('An unexpected error occurred. Please try again later.');
                 setReviews([]);
             } finally {
                 setLoading(false);
@@ -38,10 +38,10 @@ const UserReviews = () => {
 
     if (loading) {
         return <div class="d-flex justify-content-center mt-1">
-        <div className="spinner-border text-warning" role="status">
-            <span className="visually-hidden ">Loading...</span>
-        </div>
-    </div>;
+            <div className="spinner-border text-warning" role="status">
+                <span className="visually-hidden ">Loading...</span>
+            </div>
+        </div>;
     }
 
     if (reviews.length === 0) {
@@ -64,16 +64,16 @@ const UserReviews = () => {
             <h1 className='text-center'>{reviews[0]?.users?.username}'s reviews</h1>
             <p className='text-center'>{reviews[0]?.users?.bio}</p>
             <div className='text-center mb-5'>
-                <Link to={`/user/${userId}/profile`} className='orange'>
-                    view {user ? 'your' : `${reviews[0]?.users?.username}'s`} albums
+                <Link to={`/user/${userId}/profile`} className="orange">
+                    view {user && userId === user.id ? 'your' : `${reviews[0]?.users?.username}'s`} albums
                 </Link>
             </div>
 
-            
+
 
             {reviews.length > 0 ? (
                 reviews.map(review => (
-                    <div key={review.id} className='border-bottom p-2 mt-2 review'>
+                    <div key={review.id} className=' p-2 review'>
                         <div className='d-flex flex-column'>
                             <img
                                 src={review.already_listened.artwork_url.replace('100x100', '150x150')}

@@ -353,7 +353,9 @@ header {
 
 .review {
   width: 75%;
-  /* background-color: var(--dirt); */
+  background-color: var(--dirt);
+  border: 2px solid var(--white);
+
 }
 
 .artistAlbumCard {

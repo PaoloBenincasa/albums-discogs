@@ -9,7 +9,7 @@ export const searchAlbums = async (searchTerm) => {
     try {
         const response = await fetch(`https://itunes.apple.com/search?term=${searchTerm}&entity=album&media=music&country=IT`);
         const data = await response.json();
-        console.log("data searchAlbums", data);
+        // console.log("data searchAlbums", data);
         if (data.results) {
             return data.results;
         } else {
@@ -41,8 +41,6 @@ export const fetchAlbumDetails = async (collectionId) => {
 // aggiungo album a already listened
 export const addAlbumToAlreadyListened = async (userId, album, rating) => {
     try {
-        
-
         const { error } = await supabase
             .from('already_listened')
             .insert([{
@@ -105,12 +103,12 @@ export const fetchAlbumsByArtistId = async (artistId) => {
             const lookupData = await lookupResponse.json();
 
             if (lookupData.results?.length > 0) {
-                // Prende il nome dell'artista dal primo risultato
+                // prrendo il nome dell'artista dal primo risultato
                 if (offset === 0) {
                     artistName = lookupData.results[0].artistName;
                 }
 
-                // Filtra solo gli album (salta il primo elemento che è l'artista)
+                // filtro solo gli album (salta il primo elemento che è l'artista)
                 const albums = lookupData.results.slice(1);
                 allAlbums = [...allAlbums, ...albums];
 

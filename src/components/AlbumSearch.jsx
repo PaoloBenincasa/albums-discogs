@@ -10,10 +10,33 @@ const AlbumSearch = () => {
     const searchResultsRef = useRef(null);
     const debounceTimeout = useRef(null);
 
+    const handleInputChange = (e) => {
+        const value = e.target.value;
+        // aggiorno searchTerm col valore dell'input
+        setSearchTerm(value);
+
+        // cancello il debounce se è presente un timeout precedente
+        if (debounceTimeout.current) {
+            clearTimeout(debounceTimeout.current);
+        }
+
+        //  imposto il debounce per chiamare handleSearch con un timeout di mezzosecondo
+        if (value.trim()) {
+            debounceTimeout.current = setTimeout(() => {
+                handleSearch(value);
+            }, 500);
+        } else {
+            setResultsVisible(false);
+            setAlbums([]);
+        }
+    };
+
     const handleSearch = async (searchValue) => {
         try {
             setLoading(true);
+            // chiamo searchAlbums (in api.js) per effettuare la ricerca
             const results = await searchAlbums(searchValue);
+            // aggiorno lo stato albums coi risultati
             setAlbums(results);
             setLoading(false);
             setResultsVisible(true);
@@ -23,28 +46,9 @@ const AlbumSearch = () => {
         }
     };
 
-    
-    const handleInputChange = (e) => {
-        const value = e.target.value;
-        setSearchTerm(value);
 
-        
-        if (debounceTimeout.current) {
-            clearTimeout(debounceTimeout.current);
-        }
 
-       
-        if (value.trim()) {
-            debounceTimeout.current = setTimeout(() => {
-                handleSearch(value);
-            }, 500); 
-        } else {
-            setResultsVisible(false);
-            setAlbums([]);
-        }
-    };
-
-   
+    // annullo il timeout allo smontaggio del componente
     useEffect(() => {
         return () => {
             if (debounceTimeout.current) {
@@ -53,17 +57,20 @@ const AlbumSearch = () => {
         };
     }, []);
 
+    // chiudo risultati e cancello termine di ricerca quando clicco su un risultato
+    const handleResultClick = () => {
+        setResultsVisible(false);
+        setSearchTerm('');
+    };
+    
+    // chiudo i risultati della ricerca se clicco fuori dai risultati
     const handleClickOutside = (event) => {
         if (searchResultsRef.current && !searchResultsRef.current.contains(event.target)) {
             setResultsVisible(false);
         }
     };
-
-    const handleResultClick = () => {
-        setResultsVisible(false); 
-        setSearchTerm(''); 
-    };
-
+    
+    // listener per handleClickOutside
     useEffect(() => {
         document.addEventListener('mousedown', handleClickOutside);
         return () => {
@@ -71,11 +78,12 @@ const AlbumSearch = () => {
         };
     }, []);
 
+
+
     return (
 
         <div className="album-search-container w-100 border-bottom" style={{ position: 'relative' }}>
             <div className='d-flex align-items-center justify-content-center search-input-container'>
-                {/* <i className="bi bi-search me-2"></i> */}
                 <input
                     type="text"
                     placeholder="search..."
@@ -83,14 +91,13 @@ const AlbumSearch = () => {
                     onChange={handleInputChange}
                     className='mt-3 mb-3 search-input'
                 />
-                {/* <button onClick={handleManualSearch} className='btnOrange ms-1'>search</button> */}
             </div>
             {loading &&
-            <div class="d-flex justify-content-center">
-                <div className="spinner-border text-warning" role="status">
-                    <span className="visually-hidden ">Loading...</span>
+                <div class="d-flex justify-content-center">
+                    <div className="spinner-border text-warning" role="status">
+                        <span className="visually-hidden ">Loading...</span>
+                    </div>
                 </div>
-            </div>
             }
             {resultsVisible && (
                 <div className='d-flex justify-content-center'>
@@ -137,7 +144,6 @@ const AlbumSearch = () => {
                     </ul>
                 </div>
             )}
-            {/* {resultsVisible && <div className="overlay"></div>} */}
         </div>
     );
 };

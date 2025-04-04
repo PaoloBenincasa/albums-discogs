@@ -23,12 +23,14 @@ const AlbumDetail = () => {
     const [refreshReviews, setRefreshReviews] = useState(false);
     const navigate = useNavigate();
 
-    // carico i dettagli degli album
+    // carico i dettagli dell'album quando il componente viene montato o quando cambio collectionId nell'url
     useEffect(() => {
         const getAlbumDetails = async () => {
             try {
+                // chiamo fetchAlbumDetails che recupera i dati dell'album dall'api
                 const albumData = await fetchAlbumDetails(collectionId);
                 if (albumData) {
+                    // aggiorno lo stato Album coi dati 
                     setAlbum(albumData);
                 } else {
                     console.error(`Album con collectionId ${collectionId} non trovato.`);
@@ -43,22 +45,27 @@ const AlbumDetail = () => {
         getAlbumDetails();
     }, [collectionId]);
 
-    // controllo le liste solo quando user e album sono disponibili
+    // controllo se l'album è già stato aggiunto a una delle due liste e aggiorno lo stato di conseguenza
     useEffect(() => {
         const checkAlbumLists = async () => {
             if (!user || !album) return;
             try {
+                // recupero i dati di already_listened da supabase
                 const { data: alreadyListenedData, error: alreadyListenedError } = await supabase
                     .from('already_listened')
                     .select('*')
                     .eq('user_id', user.id)
                     .eq('album_id', album.collectionId);
-
+                
+                    // se non ci sono errori
                 if (!alreadyListenedError) {
+                    // imposto lo stato alreadyListened su true se c'è almeno un risultato (quindi l'album è presente)
                     setAlreadyListened(alreadyListenedData?.length > 0);
+                    // imposto lo stato alreadyListenedBadge su true per mostrare il badge
                     setShowAlreadyListenedBadge(alreadyListenedData?.length > 0);
                 }
 
+                // stessa cosa per la wishlist
                 const { data: wishlistData, error: wishlistError } = await supabase
                     .from('wishlist')
                     .select('*')
@@ -75,6 +82,7 @@ const AlbumDetail = () => {
         };
 
         checkAlbumLists();
+        // questo useEffect viene eseguito ogni volta che cambia l'utente o viene caricato un album
     }, [album, user]);
 
 
@@ -116,25 +124,33 @@ const AlbumDetail = () => {
         }
     };
 
+
+    // quando clicco su add to listened 
     const handleAddToAlreadyListened = () => {
+        // se non sono loggato mi manda al login
         if (!user) {
-            navigate('/signup');
+            navigate('/login');
             return;
         }
+        // altrimenti cambia lo stato di showRatingInput che mi mostra il range per dare il voto
         setShowRatingInput(true);
     };
 
     const handleRatingSubmit = async () => {
         if (!user || !album) return;
         try {
+            // converto il valore del voto in number
             const ratingValue = parseInt(rating);
+            // chiamo la funzione per aggiungere l'album passando utente album e voto
             await addAlbumToAlreadyListened(user.id, album, ratingValue);
-            console.log(`Album "${album.collectionName}" aggiunto a "già ascoltati" con rating ${ratingValue}`);
+            // chiudo il range
             setShowRatingInput(false);
+            // aggiorno gli stati su true per indicare che l'album è stato votato e aggiunto e per mostrare il badge
             setRatingSubmitted(true);
             setAlreadyListened(true);
             setShowAlreadyListenedBadge(true);
             toast.success(`you listened to ${album.collectionName} by ${album.artistName} and rated it ${ratingValue} out of 10!`);
+            // se l'album era in wishlist lo rimuovo dalla stessa
             if (inWishlist) {
                 await removeFromWishlist();
             }
@@ -144,79 +160,28 @@ const AlbumDetail = () => {
         }
     };
 
+    // aggiungo a wishlist
     const handleAddToWishlist = async () => {
         if (!user) {
-            navigate('/signup');
+            navigate('/login');
             return;
         }
         try {
+            // chiamo la funzione
             await addAlbumToWishlist(user.id, album);
-            console.log(`Album "${album.collectionName}" aggiunto a "da ascoltare"`);
+            // imposto gli stati su tre
             setInWishlist(true);
             setShowWishlistBadge(true);
         } catch (error) {
             console.error('Errore durante l\'aggiunta dell\'album a "da ascoltare":', error);
         }
     };
-
-    useEffect(() => {
-        const fetchReviews = async () => {
-            if (!album) {
-                console.log("Album unavailable");
-                return;
-            }
-            try {
-                const { data, error } = await supabase
-                    .from('reviews')
-                    .select('*, users(username)')
-                    .eq('album_id', String(album.collectionId));
-                if (!error) {
-                    console.log('Dati recensioni recuperati:', data);
-                    setReviews(data || []);
-                } else {
-                    console.error('Errore nel recupero delle recensioni:', error);
-                    setReviews([]);
-                }
-            } catch (error) {
-                console.error('Errore nella chiamata a supabase:', error);
-                setReviews([]);
-            }
-            setRefreshReviews(false);
-        };
-        fetchReviews();
-    }, [album, refreshReviews]);
-
-
-    useEffect(() => {
-        console.log("Stato reviews aggiornato:", reviews);
-    }, [reviews]);
-
-    const handleReviewSubmit = async () => {
-        if (!user || !album) return;
-        try {
-            const { error } = await supabase.from('reviews').insert([{
-                album_id: String(album.collectionId),
-                user_id: user.id,
-                review_text: newReview,
-            }]);
-            if (!error) {
-                setNewReview('');
-                setRefreshReviews(true);
-                handleCloseModal();
-            } else {
-                console.error('Errore durante l\'aggiunta della recensione:', error);
-            }
-        } catch (error) {
-            console.error('Errore durante l\'aggiunta della recensione:', error);
-        }
-    };
-
-
-
+    
     const handleOpenModal = async () => {
         if (!user || !album) return;
 
         try {
+            // recupero i dati da supabase destrutturandoli
             const { data: alreadyListenedData, error: alreadyListenedError } = await supabase
                 .from('already_listened')
                 .select('*')
@@ -228,12 +193,12 @@ const AlbumDetail = () => {
                 toast.error('There was an error verifying "already listened". Please try again.');
                 return;
             }
-
+            // se l'album non c'è in already_listened c'è un toast che avvisa di aggiungerlo prima di poterlo recensire
             if (alreadyListenedData.length === 0) {
                 toast.info('add the album to "already listened" first.');
                 return;
             }
-
+            // apro il modale
             setIsModalOpen(true);
         } catch (error) {
             console.error('Errore durante la verifica di "already_listened":', error);
@@ -241,17 +206,82 @@ const AlbumDetail = () => {
         }
     };
 
+    const handleReviewSubmit = async () => {
+        if (!user || !album) return;
+        try {
+            // inserisco la review su supabase, destrutturando il risultato in error
+            const { error } = await supabase.from('reviews').insert([{
+                album_id: String(album.collectionId),
+                user_id: user.id,
+                // passo a supabase il testo della recensione, ottenuto dallo stato newReview (cioè il value della textarea)
+                review_text: newReview,
+            }]);
+            // se non ci sono errori
+            if (!error) {
+                // svuoto la textarea
+                setNewReview('');
+                // imposto refreshReviews su true per forzare il refresh
+                setRefreshReviews(true);
+                // chiudo il modale
+                handleCloseModal();
+            } else {
+                console.error('Errore durante l\'aggiunta della recensione:', error);
+            }
+        } catch (error) {
+            console.error('Errore durante l\'aggiunta della recensione:', error);
+        }
+    };
+
+    // fetcho le recensioni dell'album
+    useEffect(() => {
+        const fetchReviews = async () => {
+            if (!album) {
+                console.log("Album unavailable");
+                return;
+            }
+            try {
+                // recupero le recensioni da supabase
+                const { data, error } = await supabase
+                    .from('reviews')
+                    .select('*, users(username)')
+                    // filtro i risultati per album specifico
+                    .eq('album_id', String(album.collectionId));
+                if (!error) {
+                    setReviews(data || []);
+                } else {
+                    console.error('Errore nel recupero delle recensioni:', error);
+                    setReviews([]);
+                }
+            } catch (error) {
+                console.error('Errore nella chiamata a supabase:', error);
+                setReviews([]);
+            }
+            // imposto lo stato refreshReviews a false dopo il recupero in modo tale che non si creino loop
+            setRefreshReviews(false);
+        };
+        fetchReviews();
+    }, [album, refreshReviews]);
+
+
+    useEffect(() => {
+        console.log("Stato reviews aggiornato:", reviews);
+    }, [reviews]);
+
 
     const handleCloseModal = () => {
         setIsModalOpen(false);
     };
 
+    // elimino la review
     const handleDeleteReview = async (reviewId) => {
         const confirmDelete = window.confirm('are you sure you want to delete this review?');
         if (confirmDelete) {
             try {
+                // chiamo deleteAlbumReview passandogli l'id della recensione
                 await deleteAlbumReview(reviewId);
+                // creo un array con tutte le review tranne quella che sto cancellando
                 const updatedReviews = reviews.filter(review => review.id !== reviewId);
+                // aggiorno lo stato di reviews col nuovo array
                 setReviews(updatedReviews);
                 toast.success('Review deleted successfully!');
             } catch (error) {
@@ -376,7 +406,7 @@ const AlbumDetail = () => {
                         )}
                         <div className='row review' key={album.collectionId}>
                             {reviews && reviews.map(review => (
-                                <div key={review.id} className='border-bottom p-2  '>
+                                <div key={review.id} className=' p-2 review '>
                                     <strong>
                                         <Link to={`/user/${review.user_id}/reviews`} className='orange'>
                                             {review.users?.username || 'Utente sconosciuto'}
